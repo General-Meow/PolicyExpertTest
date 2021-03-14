@@ -7,6 +7,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class Basket {
+
+    private final int TOTALS_SCALE = 2;
+
     private final List<Item> items;
 
     public Basket() {
@@ -36,7 +39,7 @@ public class Basket {
             return items.stream().map(Item::price)
                     .reduce(BigDecimal::add)
                     .orElse(BigDecimal.ZERO)
-                    .setScale(2, RoundingMode.HALF_UP);
+                    .setScale(TOTALS_SCALE, RoundingMode.HALF_UP);
         }
 
         /**
@@ -47,7 +50,14 @@ public class Basket {
          *  which provides that functionality.
          */
         private BigDecimal discounts() {
-            return BigDecimal.ZERO;
+            BigDecimal subTotal = subtotal();
+            BigDecimal discountedTotal = items.stream()
+                    .map(Item::getDiscountedPrice)
+                    .reduce(BigDecimal::add)
+                    .orElse(BigDecimal.ZERO)
+                    .setScale(TOTALS_SCALE, RoundingMode.UP);
+
+            return subTotal.subtract(discountedTotal);
         }
 
         private BigDecimal calculate() {
