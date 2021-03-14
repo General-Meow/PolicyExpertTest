@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -29,7 +30,9 @@ class BasketTest {
                 aSingleItemPricedPerUnit(),
                 multipleItemsPricedPerUnit(),
                 aSingleItemPricedByWeight(),
-                multipleItemsPricedByWeight()
+                multipleItemsPricedByWeight(),
+                twoOfTheSameItemPricedPerUnit(),
+                threeOfTheSameItemPricedPerUnit()
         );
     }
 
@@ -52,20 +55,32 @@ class BasketTest {
         return Arguments.of("a single item priced per unit", "0.49", Collections.singleton(aPintOfMilk()));
     }
 
+    private static Arguments twoOfTheSameItemPricedPerUnit() {
+        List<Item> items = List.of(aPintOfMilk(), aPintOfMilk());
+        return Arguments.of("two of a single item priced per unit", "0.49",
+                items);
+    }
+
+    private static Arguments threeOfTheSameItemPricedPerUnit() {
+        List<Item> items = List.of(aPintOfMilk(), aPintOfMilk(), aPintOfMilk());
+        return Arguments.of("three of a single item priced per unit", "0.98",
+                items);
+    }
+
     private static Arguments noItems() {
         return Arguments.of("no items", "0.00", Collections.emptyList());
     }
 
     private static Item aPintOfMilk() {
-        return new Product(new BigDecimal("0.49")).oneOf();
+        return new UnitProduct("Milk", new BigDecimal("0.49")).oneOf();
     }
 
     private static Item aPackOfDigestives() {
-        return new Product(new BigDecimal("1.55")).oneOf();
+        return new UnitProduct("Digestives", new BigDecimal("1.55")).oneOf();
     }
 
     private static WeighedProduct aKiloOfAmericanSweets() {
-        return new WeighedProduct(new BigDecimal("4.99"));
+        return new WeighedProduct("American Sweets", new BigDecimal("4.99"));
     }
 
     private static Item twoFiftyGramsOfAmericanSweets() {
@@ -73,7 +88,7 @@ class BasketTest {
     }
 
     private static WeighedProduct aKiloOfPickAndMix() {
-        return new WeighedProduct(new BigDecimal("2.99"));
+        return new WeighedProduct("PickAndMix", new BigDecimal("2.99"));
     }
 
     private static Item twoHundredGramsOfPickAndMix() {

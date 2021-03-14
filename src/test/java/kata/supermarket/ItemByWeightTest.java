@@ -16,7 +16,7 @@ public class ItemByWeightTest {
 
     @BeforeEach
     void setup() {
-        this.weightedProductStub = new WeighedProduct(PRODUCT_PRICE);
+        this.weightedProductStub = new WeighedProduct("Carrots", PRODUCT_PRICE);
         this.testObj = new ItemByWeight(weightedProductStub, PRODUCT_WEIGHT);
     }
 

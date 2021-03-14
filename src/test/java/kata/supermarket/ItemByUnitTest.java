@@ -8,13 +8,14 @@ import org.junit.jupiter.api.Test;
 public class ItemByUnitTest {
 
     private ItemByUnit testObj;
-    private Product productStub;
+    private UnitProduct productStub;
+    private final String PRODUCT_NAME = "Cola";
     private final BigDecimal PRODUCT_PRICE = new BigDecimal("2.00");
     private final BigDecimal DISCOUNTED_PRICE = new BigDecimal("1.00");
 
     @BeforeEach
     void setup() {
-        this.productStub = new Product(PRODUCT_PRICE);
+        this.productStub = new UnitProduct(PRODUCT_NAME, PRODUCT_PRICE);
         this.testObj = new ItemByUnit(productStub);
     }
 

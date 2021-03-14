@@ -4,10 +4,10 @@ import java.math.BigDecimal;
 
 public class ItemByUnit implements Item {
 
-    private final Product product;
+    private final UnitProduct product;
     private BigDecimal discountedPrice;
 
-    ItemByUnit(final Product product) {
+    ItemByUnit(final UnitProduct product) {
         this.product = product;
         this.discountedPrice = product.pricePerUnit();
     }
@@ -24,5 +24,10 @@ public class ItemByUnit implements Item {
     @Override
     public BigDecimal setDiscountedPrice(BigDecimal discountedPrice) {
         return this.discountedPrice = discountedPrice;
+    }
+
+    @Override
+    public Product getProduct() {
+        return this.product;
     }
 }

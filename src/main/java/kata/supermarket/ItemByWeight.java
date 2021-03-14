@@ -29,4 +29,9 @@ public class ItemByWeight implements Item {
         this.discountedPrice = discountedPrice.setScale(2, RoundingMode.HALF_UP);
         return this.discountedPrice;
     }
+
+    @Override
+    public Product getProduct() {
+        return this.product;
+    }
 }
